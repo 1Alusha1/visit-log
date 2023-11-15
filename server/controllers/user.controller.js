@@ -1,3 +1,4 @@
+import groupModel from "../models/group.model.js";
 import studentsModel from "../models/students.model.js";
 
 export const controlVisit = async (req, res) => {
@@ -15,4 +16,13 @@ export const controlVisit = async (req, res) => {
     },
   });
   res.status(200).json({ message: "Студент отмечен" });
+};
+
+export const createGroup = async (req, res) => {
+  const { name } = req.body;
+
+  await new groupModel({
+    name,
+  }).save();
+  res.status(200).json({ message: "Группа создна" });
 };

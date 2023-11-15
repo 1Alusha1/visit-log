@@ -8,10 +8,11 @@ import groupModel from "../models/group.model.js";
 import allOfGroupsModel from "../models/allOfGroups.model.js";
 dotenv.config();
 
-const generateAccessToken = (id, username) => {
+const generateAccessToken = (id, username, role) => {
   const payload = {
     id,
     username,
+    role,
   };
   return jwt.sign(payload, process.env.SECRET, { expiresIn: "24h" });
 };
@@ -32,21 +33,17 @@ export const registration = async (req, res) => {
     }
 
     const hashPassword = bcrypt.hashSync(password, 7);
+
+    const gModel = await groupModel.findOne({ name: group });
+
+    gModel.updateOne({ monitor: username });
+
     const user = new userModel({
       username,
       group,
       password: hashPassword,
       role: ["USER"],
     });
-
-    new groupModel({
-      name: group,
-      monitor: username,
-    }).save();
-    
-    new allOfGroupsModel({
-      name: group,
-    }).save();
 
     user.save();
     res.status(200).json({ message: "Пользователь успешно зарегестрирован" });
@@ -71,7 +68,7 @@ export const authorization = async (req, res) => {
         .json({ message: "Ошибка авторизации,проверьте введенные данные" });
     }
 
-    const token = generateAccessToken(user._id, username);
+    const token = generateAccessToken(user._id, username, user.role);
 
     await user.updateOne({ token: token });
     return res.json(token);
