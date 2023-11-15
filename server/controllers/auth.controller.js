@@ -4,6 +4,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
+import groupModel from "../models/group.model.js";
+import allOfGroupsModel from "../models/allOfGroups.model.js";
 dotenv.config();
 
 const generateAccessToken = (id, username) => {
@@ -36,8 +38,17 @@ export const registration = async (req, res) => {
       password: hashPassword,
       role: ["USER"],
     });
-    user.save();
 
+    new groupModel({
+      name: group,
+      monitor: username,
+    }).save();
+    
+    new allOfGroupsModel({
+      name: group,
+    }).save();
+
+    user.save();
     res.status(200).json({ message: "Пользователь успешно зарегестрирован" });
   } catch (error) {
     console.log(error);
@@ -102,7 +113,7 @@ const links = new Map();
 export const createRegisterLink = (req, res) => {
   const id = uuidv4();
   const link = {
-    link: `http://localhost:3000/registration/${id}`,
+    link: `${process.env.REGISTER_LINK}${id}`,
   };
   links.set(id, link);
   return res.status(200).json(link);
