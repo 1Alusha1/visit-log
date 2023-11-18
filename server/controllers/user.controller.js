@@ -1,3 +1,4 @@
+import allOfGroupsModel from "../models/allOfGroups.model.js";
 import groupModel from "../models/group.model.js";
 import studentsModel from "../models/students.model.js";
 
@@ -24,5 +25,9 @@ export const createGroup = async (req, res) => {
   await new groupModel({
     name,
   }).save();
+  await new allOfGroupsModel({
+    name,
+  }).save();
+  
   res.status(200).json({ message: "Группа создна" });
 };

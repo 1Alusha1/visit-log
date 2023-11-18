@@ -36,7 +36,7 @@ export const registration = async (req, res) => {
 
     const gModel = await groupModel.findOne({ name: group });
 
-    gModel.updateOne({ monitor: username });
+    await gModel.updateOne({ monitor: username });
 
     const user = new userModel({
       username,
@@ -81,25 +81,13 @@ export const checkAuth = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     const decodeData = jwt.verify(token, process.env.SECRET);
-    const user = await userModel.findOne({ _id: decodeData.id });
-
-    if (user) {
-      if (user.token === token) {
-        return res.status(200).json({
-          userInfo: {
-            username: user.username,
-            _id: user._id,
-            roles: user.roles,
-          },
-          isAuth: true,
-        });
-      }
-    }
+    res.json({ ...decodeData, isAuth: true });
   } catch (err) {
     if (err) {
       console.log(err);
       return res.status(500).json({
         message: "Пожалуйста авторизуруйтесь",
+        isAuth: false,
       });
     }
   }

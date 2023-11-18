@@ -4,9 +4,10 @@ import authRouter from "./routes/auth.route.js";
 import groupRouter from "./routes/group.route.js";
 import studentsRouter from "./routes/students.route.js";
 import userRouter from "./routes/user.route.js";
-
+import cors from "cors";
 const app = express();
 app.use(express.json());
+app.use(cors());
 app.use("/auth", authRouter);
 app.use("/group", groupRouter);
 app.use("/students", studentsRouter);
