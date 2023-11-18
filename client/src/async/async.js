@@ -29,8 +29,32 @@ export const checkAuth = async (token, cb) => {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
+  });
+  const data = res.json();
+  data.then((data) => cb(data));
+};
+
+export const getOwnGroup = async (dto, cb) => {
+  const res = await fetch(`http://localhost:3000/group/get-own-group`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(dto),
+  });
+  const data = res.json();
+  data.then((data) => cb(data));
+};
+
+export const controleVisit = async (dto,cb) => {
+  const res = await fetch(`http://localhost:3000/user/controle-visit`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(dto),
   });
   const data = res.json();
   data.then((data) => cb(data));

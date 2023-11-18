@@ -13,11 +13,10 @@ export const createStudent = async (req, res) => {
   if (!group) {
     return res.status(500).json({ message: "Такой группы не существует" });
   }
-  await new studentsModel(student).save();
-
+  let s =  await new studentsModel(student).save();
   await group.updateOne({
     $push: {
-      students: student,
+      students: s,
     },
   });
 

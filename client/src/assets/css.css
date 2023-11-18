@@ -72,3 +72,72 @@ select {
   color: #161616;
   font-size: 16px;
 }
+
+/* group */
+
+.group {
+  background: #161616;
+  padding: 5px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.group span {
+  font-weight: bold;
+}
+.group-name,
+.group-monitor {
+  margin-bottom: 5px;
+}
+.group-list p {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.group-student {
+  background: #272727;
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 5px;
+}
+.student-name {
+  font-weight: normal;
+  padding: 0;
+}
+.group-student {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.group-student__control {
+  margin-left: 20px;
+}
+.group-student__control button {
+  background: #858585;
+  border: none;
+  margin-left: 5px;
+  padding: 5px;
+  color: #161616;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.group-student__control button:hover {
+  background: #fff;
+  color: #161616;
+  transition: all ease 0.3s;
+  cursor: pointer;
+}
+
+.group-info {
+  display: flex;
+  align-items: center;
+}
+.group-info__subject {
+  display: flex;
+  align-items: center;
+  margin-left: 50px;
+}
+.group-info__subject select{
+  margin-bottom: 0;
+  margin-left: 10px;
+}

@@ -13,6 +13,7 @@ const MainLayout = () => {
   const [isAuth, setIsAuth] = useState();
   useEffect(() => {
     checkAuth(token, (data) => {
+      localStorage.setItem("userInfo", JSON.stringify(data));
       setIsAuth(data.isAuth);
     });
   }, []);

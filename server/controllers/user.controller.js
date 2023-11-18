@@ -2,7 +2,7 @@ import allOfGroupsModel from "../models/allOfGroups.model.js";
 import groupModel from "../models/group.model.js";
 import studentsModel from "../models/students.model.js";
 
-export const controlVisit = async (req, res) => {
+export const controleVisit = async (req, res) => {
   const { studentId, was, subject, date } = req.body;
 
   const student = await studentsModel.findOne({ _id: studentId });
